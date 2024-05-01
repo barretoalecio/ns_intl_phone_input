@@ -19,7 +19,7 @@ class CountrySelectButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-      padding: const EdgeInsets.fromLTRB(20, 12, 20, 0),
+      padding: const EdgeInsets.fromLTRB(24, 8, 24, 0),
       onPressed: onPressed,
       child: (selectedCountry == null)
           ? Text(
@@ -29,13 +29,13 @@ class CountrySelectButton extends StatelessWidget {
           : Row(
               children: [
                 FontTextWidget(text: selectedCountry?.flag ?? ''),
-                const SizedBox(width: 10),
+                const SizedBox(width: 8),
                 if (options.showCode) ...[
                   Text(
                     selectedCountry?.iso2Code.toUpperCase() ?? '',
                     style: options.countryIsoCodeTextStyle,
                   ),
-                  const SizedBox(width: 10),
+                  const SizedBox(width: 8),
                 ],
                 Text(
                   '+${selectedCountry?.intlDialCode}',

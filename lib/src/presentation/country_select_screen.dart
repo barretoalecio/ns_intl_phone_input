@@ -25,6 +25,16 @@ class CountrySelectScreen extends StatelessWidget {
           title,
           style: titleStyle,
         ),
+        leading: IconButton(
+          tooltip: 'Voltar',
+          onPressed: () {
+            Navigator.maybePop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            size: 16,
+          ),
+        ),
       ),
       body: CountrySelectionWidget(
         countrySelectionLabel: countrySelectionLabel,

@@ -96,6 +96,7 @@ class _NsIntlPhoneInputState extends State<NsIntlPhoneInput>
     return Row(
       textBaseline: TextBaseline.alphabetic,
       crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         CountrySelectButton(
           selectedCountry: widget.textEditingController.selectedCountry,
@@ -133,10 +134,13 @@ class _NsIntlPhoneInputState extends State<NsIntlPhoneInput>
           },
           options: widget.countrySelectOption,
         ),
-        Container(
-          height: 60,
-          width: 5,
-          color: Colors.grey,
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            height: 60,
+            width: 3,
+            color: Colors.grey.shade200,
+          ),
         ),
         Expanded(
           flex: 6,
