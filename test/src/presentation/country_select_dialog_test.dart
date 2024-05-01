@@ -13,6 +13,9 @@ void main() {
               body: MaterialButton(
                 onPressed: () {
                   countrySelectDialog(
+                    countrySelectionLabel: '',
+                    titleStyle: const TextStyle(),
+                    titleText: '',
                     context,
                     onCountrySelected: (p0) {
                       country = p0;

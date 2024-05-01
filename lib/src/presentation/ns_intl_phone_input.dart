@@ -10,6 +10,9 @@ class NsIntlPhoneInput extends StatefulWidget {
     Key? key,
     required this.onPhoneChange,
     required this.textEditingController,
+    this.countrySelectionText = 'Search Country',
+    this.countrySelectionLabel = 'Search',
+    this.countrySelectionTextStyle = const TextStyle(),
     this.focusNode,
     this.phoneInputFontSize = 16,
     this.phoneFieldDecoration,
@@ -19,6 +22,12 @@ class NsIntlPhoneInput extends StatefulWidget {
     this.countrySelectionType = CountrySelectionTypeEnum.dialog,
     this.enableValidation = true,
   }) : super(key: key);
+
+  final String countrySelectionLabel;
+
+  final String countrySelectionText;
+
+  final TextStyle countrySelectionTextStyle;
 
   final FocusNode? focusNode;
 
@@ -95,6 +104,9 @@ class _NsIntlPhoneInputState extends State<NsIntlPhoneInput>
                 CountrySelectionTypeEnum.dialog) {
               countrySelectDialog(
                 context,
+                titleStyle: widget.countrySelectionTextStyle,
+                titleText: widget.countrySelectionText,
+                countrySelectionLabel: widget.countrySelectionLabel,
                 onCountrySelected: (country) {
                   setState(() {
                     widget.textEditingController.setCountry(country);
@@ -106,6 +118,9 @@ class _NsIntlPhoneInputState extends State<NsIntlPhoneInput>
                 context,
                 MaterialPageRoute(
                   builder: (context) => CountrySelectScreen(
+                    countrySelectionLabel: widget.countrySelectionLabel,
+                    title: widget.countrySelectionText,
+                    titleStyle: widget.countrySelectionTextStyle,
                     onCountrySelected: (country) {
                       setState(() {
                         widget.textEditingController.setCountry(country);
@@ -117,6 +132,11 @@ class _NsIntlPhoneInputState extends State<NsIntlPhoneInput>
             }
           },
           options: widget.countrySelectOption,
+        ),
+        Container(
+          height: 60,
+          width: 5,
+          color: Colors.grey,
         ),
         Expanded(
           flex: 6,

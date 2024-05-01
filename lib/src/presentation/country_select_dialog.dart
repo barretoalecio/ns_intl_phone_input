@@ -6,6 +6,9 @@ import 'country_selection_widget.dart';
 void countrySelectDialog(
   BuildContext context, {
   required Function(CountryModel) onCountrySelected,
+  required String titleText,
+  required TextStyle titleStyle,
+  required String countrySelectionLabel,
 }) {
   showDialog(
     context: context,
@@ -13,6 +16,9 @@ void countrySelectDialog(
       return Dialog(
         child: CountrySelectionDialogWidget(
           onCountrySelected: onCountrySelected,
+          title: titleText,
+          titleStyle: titleStyle,
+          countrySelectionLabel: countrySelectionLabel,
         ),
       );
     },
@@ -23,9 +29,15 @@ class CountrySelectionDialogWidget extends StatelessWidget {
   const CountrySelectionDialogWidget({
     super.key,
     required this.onCountrySelected,
+    required this.title,
+    required this.titleStyle,
+    required this.countrySelectionLabel,
   });
 
   final Function(CountryModel) onCountrySelected;
+  final String title;
+  final TextStyle? titleStyle;
+  final String countrySelectionLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +48,8 @@ class CountrySelectionDialogWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'Select Country',
-            style: Theme.of(context).textTheme.titleLarge,
+            title,
+            style: titleStyle,
           ),
           const SizedBox(height: 8),
           Flexible(
@@ -46,6 +58,7 @@ class CountrySelectionDialogWidget extends StatelessWidget {
                 onCountrySelected(country);
                 Navigator.of(context).pop(country);
               },
+              countrySelectionLabel: countrySelectionLabel,
             ),
           ),
         ],

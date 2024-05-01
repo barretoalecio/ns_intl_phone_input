@@ -8,9 +8,11 @@ class CountrySelectionWidget extends StatefulWidget {
   const CountrySelectionWidget({
     super.key,
     required this.onCountrySelected,
+    required this.countrySelectionLabel,
   });
 
   final Function(CountryModel) onCountrySelected;
+  final String countrySelectionLabel;
 
   @override
   State<CountrySelectionWidget> createState() => _CountrySelectionWidgetState();
@@ -60,9 +62,9 @@ class _CountrySelectionWidgetState extends State<CountrySelectionWidget> {
               filterCountries();
             },
             autofocus: true,
-            decoration: const InputDecoration(
-              labelText: 'Search',
-              border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              labelText: widget.countrySelectionLabel,
+              border: const OutlineInputBorder(),
             ),
           ),
         ),

@@ -10,6 +10,9 @@ void main() {
         home: Builder(
           builder: (context) {
             return CountrySelectScreen(
+              countrySelectionLabel: '',
+              title: '',
+              titleStyle: const TextStyle(),
               onCountrySelected: (countryModel) {
                 country = countryModel;
               },

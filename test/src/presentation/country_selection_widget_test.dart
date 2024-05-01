@@ -10,6 +10,7 @@ void main() {
       MaterialApp(
         home: Scaffold(
           body: CountrySelectionWidget(
+            countrySelectionLabel: '',
             onCountrySelected: ((p0) {
               country = p0;
             }),
