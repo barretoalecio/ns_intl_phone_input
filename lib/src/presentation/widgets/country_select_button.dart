@@ -19,7 +19,7 @@ class CountrySelectButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-      padding: const EdgeInsets.fromLTRB(24, 8, 24, 0),
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
       onPressed: onPressed,
       child: (selectedCountry == null)
           ? Text(
