@@ -69,18 +69,20 @@ class _CountrySelectionWidgetState extends State<CountrySelectionWidget> {
           ),
         ),
         Expanded(
-          child: ListView.builder(
-            itemCount: filteredCountries.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: CountryDropDownWidget(
-                  country: filteredCountries[index],
-                ),
-                onTap: () {
-                  widget.onCountrySelected(filteredCountries[index]);
-                },
-              );
-            },
+          child: Scrollbar(
+            child: ListView.builder(
+              itemCount: filteredCountries.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: CountryDropDownWidget(
+                    country: filteredCountries[index],
+                  ),
+                  onTap: () {
+                    widget.onCountrySelected(filteredCountries[index]);
+                  },
+                );
+              },
+            ),
           ),
         ),
       ],
