@@ -98,50 +98,6 @@ class _NsIntlPhoneInputState extends State<NsIntlPhoneInput>
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        CountrySelectButton(
-          selectedCountry: widget.textEditingController.selectedCountry,
-          onPressed: () {
-            if (widget.countrySelectionType ==
-                CountrySelectionTypeEnum.dialog) {
-              countrySelectDialog(
-                context,
-                titleStyle: widget.countrySelectionTextStyle,
-                titleText: widget.countrySelectionText,
-                countrySelectionLabel: widget.countrySelectionLabel,
-                onCountrySelected: (country) {
-                  setState(() {
-                    widget.textEditingController.setCountry(country);
-                  });
-                },
-              );
-            } else {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => CountrySelectScreen(
-                    countrySelectionLabel: widget.countrySelectionLabel,
-                    title: widget.countrySelectionText,
-                    titleStyle: widget.countrySelectionTextStyle,
-                    onCountrySelected: (country) {
-                      setState(() {
-                        widget.textEditingController.setCountry(country);
-                      });
-                    },
-                  ),
-                ),
-              );
-            }
-          },
-          options: widget.countrySelectOption,
-        ),
-        Padding(
-          padding: const EdgeInsets.all(2.0),
-          child: Container(
-            height: 60,
-            width: 2,
-            color: Colors.grey.shade200,
-          ),
-        ),
         Expanded(
           flex: 6,
           child: TextFormField(
@@ -151,11 +107,58 @@ class _NsIntlPhoneInputState extends State<NsIntlPhoneInput>
             controller: widget.textEditingController,
             focusNode: widget.focusNode,
             inputFormatters: [widget.textEditingController.maskFormatter],
-            decoration: widget.phoneFieldDecoration ??
-                const InputDecoration(
-                  hintText: 'Phone Number',
-                  counterText: '',
+            decoration: InputDecoration(
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16.0),
+                borderSide: BorderSide(
+                  color: Theme.of(context).colorScheme.error,
                 ),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16.0),
+                borderSide: const BorderSide(
+                  color: Color(0xff4B4AB0),
+                ),
+              ),
+              prefixIcon: CountrySelectButton(
+                selectedCountry: widget.textEditingController.selectedCountry,
+                onPressed: () {
+                  if (widget.countrySelectionType ==
+                      CountrySelectionTypeEnum.dialog) {
+                    countrySelectDialog(
+                      context,
+                      titleStyle: widget.countrySelectionTextStyle,
+                      titleText: widget.countrySelectionText,
+                      countrySelectionLabel: widget.countrySelectionLabel,
+                      onCountrySelected: (country) {
+                        setState(() {
+                          widget.textEditingController.setCountry(country);
+                        });
+                      },
+                    );
+                  } else {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CountrySelectScreen(
+                          countrySelectionLabel: widget.countrySelectionLabel,
+                          title: widget.countrySelectionText,
+                          titleStyle: widget.countrySelectionTextStyle,
+                          onCountrySelected: (country) {
+                            setState(() {
+                              widget.textEditingController.setCountry(country);
+                            });
+                          },
+                        ),
+                      ),
+                    );
+                  }
+                },
+                options: widget.countrySelectOption,
+              ),
+              hintText: 'Informe o número',
+              counterText: '',
+            ),
             style: TextStyle(fontSize: widget.phoneInputFontSize),
             autovalidateMode: widget.autovalidateMode,
             validator: (value) {
@@ -164,6 +167,7 @@ class _NsIntlPhoneInputState extends State<NsIntlPhoneInput>
                     widget.textEditingController.selectedCountry == null) {
                   return null;
                 }
+                return null;
               }
               return validatePhone(
                 selectedCountry: widget.textEditingController.selectedCountry,
