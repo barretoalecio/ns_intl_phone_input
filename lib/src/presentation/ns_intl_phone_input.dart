@@ -163,9 +163,12 @@ class _NsIntlPhoneInputState extends State<NsIntlPhoneInput>
                       },
                       options: widget.countrySelectOption,
                     ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 4.0),
-                      child: VerticalDivider(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4.0),
+                      child: VerticalDivider(
+                        width: 3,
+                        color: Colors.grey.shade200,
+                      ),
                     ),
                   ],
                 ),
