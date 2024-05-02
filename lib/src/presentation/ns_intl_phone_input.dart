@@ -165,12 +165,13 @@ class _NsIntlPhoneInputState extends State<NsIntlPhoneInput>
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
-                        top: 8.0,
-                        bottom: 8,
+                        top: 4.0,
+                        bottom: 4.0,
                         right: 8.0,
                       ),
                       child: Container(
                         width: 2,
+                        height: 40,
                         color: Colors.grey.shade200,
                       ),
                     ),
