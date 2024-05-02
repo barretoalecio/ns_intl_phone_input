@@ -107,7 +107,7 @@ class _NsIntlPhoneInputState extends State<NsIntlPhoneInput>
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(16.0),
                 borderSide: BorderSide(
-                  color: Theme.of(context).colorScheme.error,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ),
               hoverColor: Colors.transparent,
