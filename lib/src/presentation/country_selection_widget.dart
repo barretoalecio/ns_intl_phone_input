@@ -72,10 +72,9 @@ class _CountrySelectionWidgetState extends State<CountrySelectionWidget> {
           child: Scrollbar(
             child: ListView.separated(
               itemCount: filteredCountries.length,
-              separatorBuilder: (context, index) {
-                return const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Divider(),
+              separatorBuilder: (BuildContext context, int index) {
+                return Divider(
+                  color: Colors.grey.shade200,
                 );
               },
               itemBuilder: (context, index) {
