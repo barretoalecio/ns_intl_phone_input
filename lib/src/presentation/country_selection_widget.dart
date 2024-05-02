@@ -70,8 +70,14 @@ class _CountrySelectionWidgetState extends State<CountrySelectionWidget> {
         ),
         Expanded(
           child: Scrollbar(
-            child: ListView.builder(
+            child: ListView.separated(
               itemCount: filteredCountries.length,
+              separatorBuilder: (context, index) {
+                return const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Divider(),
+                );
+              },
               itemBuilder: (context, index) {
                 return ListTile(
                   title: CountryDropDownWidget(
