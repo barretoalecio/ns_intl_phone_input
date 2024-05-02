@@ -70,10 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         defaultTextStyle: TextStyle(),
                         showCode: false,
                       ),
-
-                      /// Optional to select country selection as dialog or new screen
                       countrySelectionType: CountrySelectionTypeEnum.screen,
-                      focusNode: FocusNode(),
                       phoneFieldDecoration: const InputDecoration(),
                       phoneInputFontSize: 20,
                       validationErrorText: "Validation Message",

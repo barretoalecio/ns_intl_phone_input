@@ -13,7 +13,6 @@ class NsIntlPhoneInput extends StatefulWidget {
     this.countrySelectionText = 'Search Country',
     this.countrySelectionLabel = 'Search',
     this.countrySelectionTextStyle = const TextStyle(),
-    this.focusNode,
     this.phoneInputFontSize = 16,
     this.phoneFieldDecoration,
     this.autovalidateMode = AutovalidateMode.onUserInteraction,
@@ -28,8 +27,6 @@ class NsIntlPhoneInput extends StatefulWidget {
   final String countrySelectionText;
 
   final TextStyle countrySelectionTextStyle;
-
-  final FocusNode? focusNode;
 
   final bool enableValidation;
 
@@ -105,9 +102,15 @@ class _NsIntlPhoneInputState extends State<NsIntlPhoneInput>
             maxLength:
                 widget.textEditingController.selectedCountry?.format?.length,
             controller: widget.textEditingController,
-            focusNode: widget.focusNode,
             inputFormatters: [widget.textEditingController.maskFormatter],
             decoration: InputDecoration(
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16.0),
+                borderSide: BorderSide(
+                  color: Theme.of(context).colorScheme.error,
+                ),
+              ),
+              hoverColor: Colors.transparent,
               errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(16.0),
                 borderSide: BorderSide(
