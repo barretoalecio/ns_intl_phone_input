@@ -120,8 +120,7 @@ class _NsIntlPhoneInputState extends State<NsIntlPhoneInput>
                   color: Color(0xff4B4AB0),
                 ),
               ),
-              prefixIcon: SizedBox(
-                width: MediaQuery.of(context).size.width * 0.3,
+              prefixIcon: IntrinsicWidth(
                 child: CountrySelectButton(
                   selectedCountry: widget.textEditingController.selectedCountry,
                   onPressed: () {
@@ -148,7 +147,8 @@ class _NsIntlPhoneInputState extends State<NsIntlPhoneInput>
                             titleStyle: widget.countrySelectionTextStyle,
                             onCountrySelected: (country) {
                               setState(() {
-                                widget.textEditingController.setCountry(country);
+                                widget.textEditingController
+                                    .setCountry(country);
                               });
                             },
                           ),
