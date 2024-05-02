@@ -165,8 +165,9 @@ class _NsIntlPhoneInputState extends State<NsIntlPhoneInput>
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 4.0),
-                      child: VerticalDivider(
+                      child: Container(
                         width: 3,
+                        height: 60,
                         color: Colors.grey.shade200,
                       ),
                     ),
