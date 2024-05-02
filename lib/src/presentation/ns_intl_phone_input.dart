@@ -121,42 +121,53 @@ class _NsIntlPhoneInputState extends State<NsIntlPhoneInput>
                 ),
               ),
               prefixIcon: IntrinsicWidth(
-                child: CountrySelectButton(
-                  selectedCountry: widget.textEditingController.selectedCountry,
-                  onPressed: () {
-                    if (widget.countrySelectionType ==
-                        CountrySelectionTypeEnum.dialog) {
-                      countrySelectDialog(
-                        context,
-                        titleStyle: widget.countrySelectionTextStyle,
-                        titleText: widget.countrySelectionText,
-                        countrySelectionLabel: widget.countrySelectionLabel,
-                        onCountrySelected: (country) {
-                          setState(() {
-                            widget.textEditingController.setCountry(country);
-                          });
-                        },
-                      );
-                    } else {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CountrySelectScreen(
-                            countrySelectionLabel: widget.countrySelectionLabel,
-                            title: widget.countrySelectionText,
+                child: Row(
+                  children: [
+                    CountrySelectButton(
+                      selectedCountry:
+                          widget.textEditingController.selectedCountry,
+                      onPressed: () {
+                        if (widget.countrySelectionType ==
+                            CountrySelectionTypeEnum.dialog) {
+                          countrySelectDialog(
+                            context,
                             titleStyle: widget.countrySelectionTextStyle,
+                            titleText: widget.countrySelectionText,
+                            countrySelectionLabel: widget.countrySelectionLabel,
                             onCountrySelected: (country) {
                               setState(() {
                                 widget.textEditingController
                                     .setCountry(country);
                               });
                             },
-                          ),
-                        ),
-                      );
-                    }
-                  },
-                  options: widget.countrySelectOption,
+                          );
+                        } else {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CountrySelectScreen(
+                                countrySelectionLabel:
+                                    widget.countrySelectionLabel,
+                                title: widget.countrySelectionText,
+                                titleStyle: widget.countrySelectionTextStyle,
+                                onCountrySelected: (country) {
+                                  setState(() {
+                                    widget.textEditingController
+                                        .setCountry(country);
+                                  });
+                                },
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                      options: widget.countrySelectOption,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 4.0),
+                      child: VerticalDivider(),
+                    ),
+                  ],
                 ),
               ),
               hintText: 'Informe o número',
