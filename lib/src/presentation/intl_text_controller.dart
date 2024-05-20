@@ -37,7 +37,11 @@ class IntlTextEditingController extends TextEditingController {
       newValue: TextEditingValue(text: selectedCountry?.currentAreaCode ?? ''),
     );
 
-    text = maskFormatter.maskText(phoneNumber);
+    value = TextEditingValue(
+      text: maskFormatter.maskText(phoneNumber),
+      selection: TextSelection.collapsed(offset: text.length),
+    );
+
     notifyListeners();
   }
 
@@ -50,7 +54,10 @@ class IntlTextEditingController extends TextEditingController {
       newValue: TextEditingValue(text: selectedCountry?.currentAreaCode ?? ''),
     );
 
-    text = maskFormatter.maskText(newCountry?.currentAreaCode ?? '');
+    value = TextEditingValue(
+      text: maskFormatter.maskText(newCountry?.currentAreaCode ?? ''),
+      selection: TextSelection.collapsed(offset: text.length),
+    );
 
     notifyListeners();
   }
