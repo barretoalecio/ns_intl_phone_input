@@ -67,7 +67,6 @@ class IntlTextEditingController extends TextEditingController {
   }
 
   void setCountry(CountryModel? newCountry) {
-    clear();
     selectedCountry = newCountry;
     maskFormatter.updateMask(
       mask: selectedCountry?.format,
@@ -81,6 +80,5 @@ class IntlTextEditingController extends TextEditingController {
   void clear() {
     super.clear();
     selectedCountry = null;
-    text = '';
   }
 }
