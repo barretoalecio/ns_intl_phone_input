@@ -13,10 +13,11 @@ class IntlTextEditingController extends TextEditingController {
     filter: {'.': RegExp(r'[0-9]')},
   );
 
-  @override
-  set text(String newText) {
-    super.text = newText;
-    notifyListeners();
+  void updateText(String newText) {
+    value = value.copyWith(
+      text: newText,
+      selection: TextSelection.collapsed(offset: newText.length),
+    );
   }
 
   void initialPhone({
@@ -37,10 +38,7 @@ class IntlTextEditingController extends TextEditingController {
       newValue: TextEditingValue(text: selectedCountry?.currentAreaCode ?? ''),
     );
 
-    value = TextEditingValue(
-      text: maskFormatter.maskText(phoneNumber),
-      selection: TextSelection.collapsed(offset: text.length),
-    );
+    updateText(maskFormatter.maskText(phoneNumber));
 
     notifyListeners();
   }
@@ -54,10 +52,7 @@ class IntlTextEditingController extends TextEditingController {
       newValue: TextEditingValue(text: selectedCountry?.currentAreaCode ?? ''),
     );
 
-    value = TextEditingValue(
-      text: maskFormatter.maskText(newCountry?.currentAreaCode ?? ''),
-      selection: TextSelection.collapsed(offset: text.length),
-    );
+    updateText(maskFormatter.maskText(newCountry?.currentAreaCode ?? ''));
 
     notifyListeners();
   }
@@ -66,7 +61,7 @@ class IntlTextEditingController extends TextEditingController {
   void clear() {
     super.clear();
     selectedCountry = null;
-    text = '';
+    updateText('');
     notifyListeners();
   }
 }
