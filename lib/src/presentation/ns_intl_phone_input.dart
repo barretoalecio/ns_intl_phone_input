@@ -101,7 +101,9 @@ class _NsIntlPhoneInputState extends State<NsIntlPhoneInput>
             key: const Key('ns_phone_input_field'),
             maxLength:
                 widget.textEditingController.selectedCountry?.format?.length,
-            controller: widget.textEditingController,
+            controller: TextEditingController(
+              text: widget.textEditingController.text,
+            ),
             inputFormatters: [widget.textEditingController.maskFormatter],
             decoration: InputDecoration(
               focusedBorder: OutlineInputBorder(

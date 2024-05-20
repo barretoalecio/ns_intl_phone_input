@@ -16,7 +16,7 @@ class IntlTextEditingController extends TextEditingController {
   @override
   set text(String newText) {
     print('EDITANDO O VALUE DO TEXT');
-    value = value.copyWith(
+    value = TextEditingValue(
       text: newText,
       selection: TextSelection.collapsed(offset: newText.length),
     );
