@@ -99,13 +99,10 @@ class _NsIntlPhoneInputState extends State<NsIntlPhoneInput>
           flex: 6,
           child: TextFormField(
             key: const Key('ns_phone_input_field'),
-            focusNode: FocusNode(),
             maxLength:
                 widget.textEditingController.selectedCountry?.format?.length,
             controller: widget.textEditingController,
-            inputFormatters: widget.textEditingController.maskFormatter != null
-                ? [widget.textEditingController.maskFormatter!]
-                : [],
+            inputFormatters: [widget.textEditingController.maskFormatter],
             decoration: InputDecoration(
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(16.0),
