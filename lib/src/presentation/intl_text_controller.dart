@@ -41,6 +41,28 @@ class IntlTextEditingController extends TextEditingController {
     notifyListeners();
   }
 
+  void updatePhone({
+    required String phoneNumber,
+  }) {
+    selectedCountry = NSIntlPhoneHelper.selectedCountryCode(
+          countryCode: selectedCountry!.dialCode,
+          phoneNumber: NSIntlPhoneHelper.getUnMaskedPhoneNumber(
+            phoneNumber: phoneNumber,
+          ),
+        ) ??
+        selectedCountry;
+
+    maskFormatter.updateMask(
+      mask: selectedCountry?.format,
+      filter: {'.': RegExp(r'[0-9]')},
+      newValue: TextEditingValue(text: selectedCountry?.currentAreaCode ?? ''),
+    );
+
+    text = maskFormatter.maskText(phoneNumber);
+    
+    notifyListeners();
+  }
+
   void setCountry(CountryModel? newCountry) {
     clear();
     selectedCountry = newCountry;
