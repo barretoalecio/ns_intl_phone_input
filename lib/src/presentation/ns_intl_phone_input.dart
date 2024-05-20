@@ -23,27 +23,16 @@ class NsIntlPhoneInput extends StatefulWidget {
   }) : super(key: key);
 
   final String countrySelectionLabel;
-
   final String countrySelectionText;
-
   final TextStyle countrySelectionTextStyle;
-
   final bool enableValidation;
-
   final String validationErrorText;
-
   final AutovalidateMode autovalidateMode;
-
   final InputDecoration? phoneFieldDecoration;
-
   final CountrySelectOption countrySelectOption;
-
   final CountrySelectionTypeEnum countrySelectionType;
-
   final Function(CountrySelection) onPhoneChange;
-
   final IntlTextEditingController textEditingController;
-
   final double phoneInputFontSize;
 
   @override
@@ -55,32 +44,43 @@ class _NsIntlPhoneInputState extends State<NsIntlPhoneInput>
   @override
   void initState() {
     super.initState();
-    widget.textEditingController.addListener(() {
-      _notifyListeners(widget.textEditingController.text);
-    });
+    widget.textEditingController.addListener(_handleTextChanged);
   }
 
-  void _notifyListeners(text) {
-    final unMastedValue = NSIntlPhoneHelper.getUnMaskedPhoneNumber(
+  @override
+  void dispose() {
+    widget.textEditingController.removeListener(_handleTextChanged);
+    super.dispose();
+  }
+
+  void _handleTextChanged() {
+    final text = widget.textEditingController.text;
+    _notifyListeners(text);
+  }
+
+  void _notifyListeners(String text) {
+    final unMaskedValue = NSIntlPhoneHelper.getUnMaskedPhoneNumber(
       phoneNumber: text,
     );
 
     final newCountry = NSIntlPhoneHelper.selectedCountryCode(
           countryCode:
               widget.textEditingController.selectedCountry?.intlDialCode ?? '',
-          phoneNumber: unMastedValue,
+          phoneNumber: unMaskedValue,
         ) ??
         widget.textEditingController.selectedCountry;
+
     if (newCountry != null) {
       if (newCountry.countryName !=
           widget.textEditingController.selectedCountry?.countryName) {
         widget.textEditingController.selectedCountry = newCountry;
       }
+
       widget.onPhoneChange(
         CountrySelection(
           selectedCountry: newCountry,
           formattedPhoneNumber: text,
-          unformattedPhoneNumber: unMastedValue,
+          unformattedPhoneNumber: unMaskedValue,
         ),
       );
     }
@@ -188,10 +188,6 @@ class _NsIntlPhoneInputState extends State<NsIntlPhoneInput>
             autovalidateMode: widget.autovalidateMode,
             validator: (value) {
               if (!widget.enableValidation) {
-                if ((value == null || value.isEmpty) &&
-                    widget.textEditingController.selectedCountry == null) {
-                  return null;
-                }
                 return null;
               }
               return validatePhone(
