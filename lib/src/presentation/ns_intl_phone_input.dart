@@ -100,10 +100,8 @@ class _NsIntlPhoneInputState extends State<NsIntlPhoneInput>
           child: TextFormField(
             key: const Key('ns_phone_input_field'),
             onChanged: (_) {
-              widget.textEditingController.text = _;
               setState(() {
-                print(widget.textEditingController);
-                print('mudou');
+                print('ALTEROU VALOR');
               });
             },
             maxLength:

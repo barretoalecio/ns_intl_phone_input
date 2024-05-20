@@ -15,7 +15,10 @@ class IntlTextEditingController extends TextEditingController {
 
   @override
   set text(String newText) {
-    super.text = newText;
+    value = value.copyWith(
+      text: newText,
+      selection: TextSelection.collapsed(offset: newText.length),
+    );
     notifyListeners();
   }
 
@@ -34,11 +37,14 @@ class IntlTextEditingController extends TextEditingController {
     maskFormatter.updateMask(
       mask: selectedCountry?.format,
       filter: {'.': RegExp(r'[0-9]')},
-      newValue: TextEditingValue(text: selectedCountry?.currentAreaCode ?? ''),
     );
 
-    text = maskFormatter.maskText(phoneNumber);
-    notifyListeners();
+    value = value.copyWith(
+      text: maskFormatter.maskText(phoneNumber),
+      selection: TextSelection.collapsed(
+        offset: maskFormatter.maskText(phoneNumber).length,
+      ),
+    );
   }
 
   void updatePhone({
@@ -55,12 +61,9 @@ class IntlTextEditingController extends TextEditingController {
     maskFormatter.updateMask(
       mask: selectedCountry?.format,
       filter: {'.': RegExp(r'[0-9]')},
-      newValue: TextEditingValue(text: selectedCountry?.currentAreaCode ?? ''),
     );
 
     text = maskFormatter.maskText(phoneNumber);
-    
-    notifyListeners();
   }
 
   void setCountry(CountryModel? newCountry) {
@@ -69,12 +72,9 @@ class IntlTextEditingController extends TextEditingController {
     maskFormatter.updateMask(
       mask: selectedCountry?.format,
       filter: {'.': RegExp(r'[0-9]')},
-      newValue: TextEditingValue(text: selectedCountry?.currentAreaCode ?? ''),
     );
 
     text = maskFormatter.maskText(newCountry?.currentAreaCode ?? '');
-
-    notifyListeners();
   }
 
   @override
@@ -82,6 +82,5 @@ class IntlTextEditingController extends TextEditingController {
     super.clear();
     selectedCountry = null;
     text = '';
-    notifyListeners();
   }
 }
