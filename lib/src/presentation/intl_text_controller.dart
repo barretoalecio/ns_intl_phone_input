@@ -4,26 +4,14 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import '../../ns_intl_phone_input.dart';
 
 class IntlTextEditingController extends TextEditingController {
+  IntlTextEditingController({String? text}) : super(text: text);
+
   CountryModel? selectedCountry;
 
-  final MaskTextInputFormatter maskFormatter = MaskTextInputFormatter(
+  MaskTextInputFormatter maskFormatter = MaskTextInputFormatter(
     mask: '...-..-....',
     filter: {'.': RegExp(r'[0-9]')},
   );
-
-  IntlTextEditingController({String? text}) : super(text: text) {
-    addListener(_applyMask);
-  }
-
-  void _applyMask() {
-    final newText = maskFormatter.maskText(text);
-    if (newText != text) {
-      value = value.copyWith(
-        text: newText,
-        selection: TextSelection.collapsed(offset: newText.length),
-      );
-    }
-  }
 
   void initialPhone({
     required String phoneNumber,
@@ -42,11 +30,10 @@ class IntlTextEditingController extends TextEditingController {
       filter: {'.': RegExp(r'[0-9]')},
     );
 
-    final newText = maskFormatter.maskText(phoneNumber);
-
-    value = TextEditingValue(
-      text: newText,
-      selection: TextSelection.collapsed(offset: newText.length),
+    final maskedText = maskFormatter.maskText(phoneNumber);
+    value = value.copyWith(
+      text: maskedText,
+      selection: TextSelection.collapsed(offset: maskedText.length),
     );
   }
 
@@ -58,17 +45,21 @@ class IntlTextEditingController extends TextEditingController {
       filter: {'.': RegExp(r'[0-9]')},
     );
 
-    final newText = maskFormatter.maskText(newCountry?.currentAreaCode ?? '');
-
-    value = TextEditingValue(
-      text: newText,
-      selection: TextSelection.collapsed(offset: newText.length),
+    final maskedText =
+        maskFormatter.maskText(newCountry?.currentAreaCode ?? '');
+    value = value.copyWith(
+      text: maskedText,
+      selection: TextSelection.collapsed(offset: maskedText.length),
     );
   }
 
   @override
   void clear() {
-    selectedCountry = null;
     super.clear();
+    selectedCountry = null;
+    value = const TextEditingValue(
+      text: '',
+      selection: TextSelection.collapsed(offset: 0),
+    );
   }
 }
