@@ -13,6 +13,12 @@ class IntlTextEditingController extends TextEditingController {
     filter: {'.': RegExp(r'[0-9]')},
   );
 
+  @override
+  set text(String newText) {
+    super.text = newText;
+    notifyListeners();
+  }
+
   void initialPhone({
     required String phoneNumber,
     required String intlDialCode,
@@ -25,35 +31,27 @@ class IntlTextEditingController extends TextEditingController {
         ) ??
         selectedCountry;
 
-    updateMaskAndText(phoneNumber);
+    maskFormatter.updateMask(
+      mask: selectedCountry?.format,
+      filter: {'.': RegExp(r'[0-9]')},
+      newValue: TextEditingValue(text: selectedCountry?.currentAreaCode ?? ''),
+    );
+
+    text = maskFormatter.maskText(phoneNumber);
+    notifyListeners();
   }
 
   void setCountry(CountryModel? newCountry) {
+    clear();
     selectedCountry = newCountry;
-    updateMaskAndText(newCountry?.currentAreaCode ?? '');
-  }
+    maskFormatter.updateMask(
+      mask: selectedCountry?.format,
+      filter: {'.': RegExp(r'[0-9]')},
+      newValue: TextEditingValue(text: selectedCountry?.currentAreaCode ?? ''),
+    );
 
-  void updateMaskAndText(String phoneNumber) {
-    if (text.isNotEmpty) {
-      final unmaskedText = maskFormatter.getUnmaskedText();
-      final maskedText =
-          maskFormatter.maskText(phoneNumber.substring(unmaskedText.length));
-      final newText = unmaskedText + maskedText;
-      value = TextEditingValue(
-        text: newText,
-        selection: TextSelection.collapsed(offset: newText.length),
-      );
-    } else {
-      maskFormatter = MaskTextInputFormatter(
-        mask: selectedCountry?.format ?? '...-..-....',
-        filter: {'.': RegExp(r'[0-9]')},
-      );
-      final maskedText = maskFormatter.maskText(phoneNumber);
-      value = TextEditingValue(
-        text: maskedText,
-        selection: TextSelection.collapsed(offset: maskedText.length),
-      );
-    }
+    text = maskFormatter.maskText(newCountry?.currentAreaCode ?? '');
+
     notifyListeners();
   }
 
@@ -61,9 +59,7 @@ class IntlTextEditingController extends TextEditingController {
   void clear() {
     super.clear();
     selectedCountry = null;
-    value = const TextEditingValue(
-      text: '',
-      selection: TextSelection.collapsed(offset: 0),
-    );
+    text = '';
+    notifyListeners();
   }
 }
