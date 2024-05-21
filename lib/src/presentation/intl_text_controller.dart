@@ -35,11 +35,12 @@ class IntlTextEditingController extends TextEditingController {
 
   void updateMaskAndText(String phoneNumber) {
     maskFormatter = MaskTextInputFormatter(
-      mask: selectedCountry?.format,
+      mask: selectedCountry?.format ?? '...-..-....',
       filter: {'.': RegExp(r'[0-9]')},
     );
 
-    final maskedText = maskFormatter.maskText(phoneNumber);
+    final unmaskedText = maskFormatter.unmaskText(phoneNumber);
+    final maskedText = maskFormatter.maskText(unmaskedText);
     final textValue = TextEditingValue(
       text: maskedText,
       selection: TextSelection.collapsed(offset: maskedText.length),
