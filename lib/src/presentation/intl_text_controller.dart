@@ -30,23 +30,21 @@ class IntlTextEditingController extends TextEditingController {
       filter: {'.': RegExp(r'[0-9]')},
     );
 
-    final maskedText = maskFormatter.maskText(phoneNumber);
-    value = TextEditingValue(
-      text: maskedText,
-      selection: TextSelection.collapsed(offset: maskedText.length),
-    );
+    updateText(phoneNumber);
   }
 
   void setCountry(CountryModel? newCountry) {
-    clear();
     selectedCountry = newCountry;
     maskFormatter.updateMask(
       mask: selectedCountry?.format,
       filter: {'.': RegExp(r'[0-9]')},
     );
 
-    final maskedText =
-        maskFormatter.maskText(newCountry?.currentAreaCode ?? '');
+    updateText(newCountry?.currentAreaCode ?? '');
+  }
+
+  void updateText(String phoneNumber) {
+    final maskedText = maskFormatter.maskText(phoneNumber);
     value = TextEditingValue(
       text: maskedText,
       selection: TextSelection.collapsed(offset: maskedText.length),

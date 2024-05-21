@@ -50,12 +50,12 @@ class _NsIntlPhoneInputState extends State<NsIntlPhoneInput>
   }
 
   void _notifyListeners(String text) {
-    final unMastedValue =
+    final unMaskedValue =
         NSIntlPhoneHelper.getUnMaskedPhoneNumber(phoneNumber: text);
     final newCountry = NSIntlPhoneHelper.selectedCountryCode(
           countryCode:
               widget.textEditingController.selectedCountry?.intlDialCode ?? '',
-          phoneNumber: unMastedValue,
+          phoneNumber: unMaskedValue,
         ) ??
         widget.textEditingController.selectedCountry;
 
@@ -68,7 +68,7 @@ class _NsIntlPhoneInputState extends State<NsIntlPhoneInput>
         CountrySelection(
           selectedCountry: newCountry,
           formattedPhoneNumber: text,
-          unformattedPhoneNumber: unMastedValue,
+          unformattedPhoneNumber: unMaskedValue,
         ),
       );
     }
@@ -90,7 +90,7 @@ class _NsIntlPhoneInputState extends State<NsIntlPhoneInput>
             maxLength:
                 widget.textEditingController.selectedCountry?.format?.length,
             controller: widget.textEditingController,
-            // inputFormatters: [widget.textEditingController.maskFormatter],
+            inputFormatters: [widget.textEditingController.maskFormatter],
             decoration: widget.phoneFieldDecoration ??
                 InputDecoration(
                   focusedBorder: OutlineInputBorder(
