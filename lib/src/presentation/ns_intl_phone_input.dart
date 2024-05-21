@@ -90,7 +90,7 @@ class _NsIntlPhoneInputState extends State<NsIntlPhoneInput>
             maxLength:
                 widget.textEditingController.selectedCountry?.format?.length,
             controller: widget.textEditingController,
-            // inputFormatters: [widget.textEditingController.maskFormatter],
+            inputFormatters: [widget.textEditingController.maskFormatter],
             decoration: widget.phoneFieldDecoration ??
                 InputDecoration(
                   focusedBorder: OutlineInputBorder(
