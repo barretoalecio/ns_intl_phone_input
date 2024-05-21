@@ -31,15 +31,12 @@ class IntlTextEditingController extends TextEditingController {
         ) ??
         selectedCountry;
 
-    // Atualiza a máscara com o formato do país selecionado
     maskFormatter.updateMask(
       mask: selectedCountry?.format,
       filter: {'.': RegExp(r'[0-9]')},
-      // Define o novo valor do campo de texto sem aplicar a máscara
       newValue: TextEditingValue(text: phoneNumber),
     );
 
-    // Aplica a máscara ao número de telefone e define o valor do campo
     text = maskFormatter.maskText(phoneNumber);
     notifyListeners();
   }
