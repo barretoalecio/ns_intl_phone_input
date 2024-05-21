@@ -25,7 +25,7 @@ class IntlTextEditingController extends TextEditingController {
         ) ??
         selectedCountry;
 
-    updateMaskAndText(phoneNumber);
+    updateMaskAndText(phoneNumber, skipClear: true);
   }
 
   void setCountry(CountryModel? newCountry) {
@@ -33,21 +33,22 @@ class IntlTextEditingController extends TextEditingController {
     updateMaskAndText(newCountry?.currentAreaCode ?? '');
   }
 
-  void updateMaskAndText(String phoneNumber) {
+  void updateMaskAndText(String phoneNumber, {bool skipClear = false}) {
     maskFormatter = MaskTextInputFormatter(
-      mask: selectedCountry?.format ?? '...-..-....',
+      mask: selectedCountry?.format,
       filter: {'.': RegExp(r'[0-9]')},
     );
 
-    final unmaskedText = maskFormatter.unmaskText(phoneNumber);
-    final maskedText = maskFormatter.maskText(unmaskedText);
+    final maskedText = maskFormatter.maskText(phoneNumber);
     final textValue = TextEditingValue(
       text: maskedText,
       selection: TextSelection.collapsed(offset: maskedText.length),
     );
 
-    value = textValue;
-    notifyListeners();
+    if (!skipClear) {
+      value = textValue;
+      notifyListeners();
+    }
   }
 
   @override
