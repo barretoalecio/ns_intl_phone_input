@@ -34,20 +34,31 @@ class IntlTextEditingController extends TextEditingController {
   }
 
   void updateMaskAndText(String phoneNumber) {
-    maskFormatter = MaskTextInputFormatter(
-      mask: selectedCountry?.format,
-      filter: {'.': RegExp(r'[0-9]')},
-    );
-
-    final maskedText = maskFormatter.maskText(phoneNumber);
-    final textValue = TextEditingValue(
-      text: maskedText,
-      selection: TextSelection.collapsed(offset: maskedText.length),
-    );
-    if (value.text != textValue.text) {
-      value = textValue;
+    // Verifica se o campo já possui um valor
+    if (text.isNotEmpty) {
+      // Obtém a parte já digitada pelo usuário
+      final unmaskedText = maskFormatter.getUnmaskedText();
+      // Aplica a máscara apenas na parte não digitada
+      final maskedText =
+          maskFormatter.maskText(phoneNumber.substring(unmaskedText.length));
+      // Concatena a parte já digitada com a parte mascarada
+      final newText = unmaskedText + maskedText;
+      value = TextEditingValue(
+        text: newText,
+        selection: TextSelection.collapsed(offset: newText.length),
+      );
+    } else {
+      // Se o campo estiver vazio, aplica a máscara normalmente
+      maskFormatter = MaskTextInputFormatter(
+        mask: selectedCountry?.format ?? '...-..-....',
+        filter: {'.': RegExp(r'[0-9]')},
+      );
+      final maskedText = maskFormatter.maskText(phoneNumber);
+      value = TextEditingValue(
+        text: maskedText,
+        selection: TextSelection.collapsed(offset: maskedText.length),
+      );
     }
-
     notifyListeners();
   }
 
