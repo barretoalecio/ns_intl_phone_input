@@ -34,6 +34,10 @@ class IntlTextEditingController extends TextEditingController {
   }
 
   void updateMaskAndText(String phoneNumber) {
+    if (phoneNumber != maskFormatter.getUnmaskedText()) {
+      return;
+    }
+
     maskFormatter.updateMask(
       mask: selectedCountry?.format,
       filter: {'.': RegExp(r'[0-9]')},
