@@ -31,7 +31,7 @@ class IntlTextEditingController extends TextEditingController {
     );
 
     final maskedText = maskFormatter.maskText(phoneNumber);
-    value = value.copyWith(
+    value = TextEditingValue(
       text: maskedText,
       selection: TextSelection.collapsed(offset: maskedText.length),
     );
@@ -47,7 +47,7 @@ class IntlTextEditingController extends TextEditingController {
 
     final maskedText =
         maskFormatter.maskText(newCountry?.currentAreaCode ?? '');
-    value = value.copyWith(
+    value = TextEditingValue(
       text: maskedText,
       selection: TextSelection.collapsed(offset: maskedText.length),
     );
