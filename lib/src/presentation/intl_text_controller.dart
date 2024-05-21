@@ -4,21 +4,24 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import '../../ns_intl_phone_input.dart';
 
 class IntlTextEditingController extends TextEditingController {
-  IntlTextEditingController({String? text}) : super(text: text);
-
   CountryModel? selectedCountry;
 
-  MaskTextInputFormatter maskFormatter = MaskTextInputFormatter(
+  final MaskTextInputFormatter maskFormatter = MaskTextInputFormatter(
     mask: '...-..-....',
     filter: {'.': RegExp(r'[0-9]')},
   );
 
-  @override
-  set text(String newText) {
-    print(text);
+  IntlTextEditingController({String? text}) : super(text: text) {
+    addListener(_applyMask);
+  }
+
+  void _applyMask() {
+    final newText = maskFormatter.maskText(text);
     if (newText != text) {
-      super.text = newText;
-      notifyListeners();
+      value = value.copyWith(
+        text: newText,
+        selection: TextSelection.collapsed(offset: newText.length),
+      );
     }
   }
 
@@ -37,11 +40,14 @@ class IntlTextEditingController extends TextEditingController {
     maskFormatter.updateMask(
       mask: selectedCountry?.format,
       filter: {'.': RegExp(r'[0-9]')},
-      newValue: TextEditingValue(text: selectedCountry?.currentAreaCode ?? ''),
     );
 
-    value = TextEditingValue(text: maskFormatter.maskText(phoneNumber));
-    notifyListeners();
+    final newText = maskFormatter.maskText(phoneNumber);
+
+    value = TextEditingValue(
+      text: newText,
+      selection: TextSelection.collapsed(offset: newText.length),
+    );
   }
 
   void setCountry(CountryModel? newCountry) {
@@ -50,21 +56,19 @@ class IntlTextEditingController extends TextEditingController {
     maskFormatter.updateMask(
       mask: selectedCountry?.format,
       filter: {'.': RegExp(r'[0-9]')},
-      newValue: TextEditingValue(text: selectedCountry?.currentAreaCode ?? ''),
     );
+
+    final newText = maskFormatter.maskText(newCountry?.currentAreaCode ?? '');
 
     value = TextEditingValue(
-      text: maskFormatter.maskText(newCountry?.currentAreaCode ?? ''),
+      text: newText,
+      selection: TextSelection.collapsed(offset: newText.length),
     );
-
-    notifyListeners();
   }
 
   @override
   void clear() {
-    super.clear();
     selectedCountry = null;
-    text = '';
-    notifyListeners();
+    super.clear();
   }
 }
