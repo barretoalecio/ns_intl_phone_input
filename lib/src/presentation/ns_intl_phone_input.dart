@@ -97,109 +97,113 @@ class _NsIntlPhoneInputState extends State<NsIntlPhoneInput>
       children: [
         Expanded(
           flex: 6,
-          child: TextFormField(
-            key: const Key('ns_phone_input_field'),
-            maxLength:
-                widget.textEditingController.selectedCountry?.format?.length,
-            controller: widget.textEditingController,
-            inputFormatters: [widget.textEditingController.maskFormatter],
-            decoration: InputDecoration(
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(16.0),
-                borderSide: BorderSide(
-                  color: Theme.of(context).colorScheme.primary,
+          child: ValueListenableBuilder<TextEditingValue>(
+            valueListenable: widget.textEditingController,
+            builder: (context, value, child) => TextFormField(
+              key: const Key('ns_phone_input_field'),
+              maxLength:
+                  widget.textEditingController.selectedCountry?.format?.length,
+              controller: widget.textEditingController,
+              inputFormatters: [widget.textEditingController.maskFormatter],
+              decoration: InputDecoration(
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16.0),
+                  borderSide: BorderSide(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                 ),
-              ),
-              hoverColor: Colors.transparent,
-              errorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(16.0),
-                borderSide: BorderSide(
-                  color: Theme.of(context).colorScheme.error,
+                hoverColor: Colors.transparent,
+                errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16.0),
+                  borderSide: BorderSide(
+                    color: Theme.of(context).colorScheme.error,
+                  ),
                 ),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(16.0),
-                borderSide: const BorderSide(
-                  color: Color(0xff4B4AB0),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16.0),
+                  borderSide: const BorderSide(
+                    color: Color(0xff4B4AB0),
+                  ),
                 ),
-              ),
-              prefixIcon: IntrinsicWidth(
-                child: Row(
-                  children: [
-                    CountrySelectButton(
-                      selectedCountry:
-                          widget.textEditingController.selectedCountry,
-                      onPressed: () {
-                        if (widget.countrySelectionType ==
-                            CountrySelectionTypeEnum.dialog) {
-                          countrySelectDialog(
-                            context,
-                            titleStyle: widget.countrySelectionTextStyle,
-                            titleText: widget.countrySelectionText,
-                            countrySelectionLabel: widget.countrySelectionLabel,
-                            onCountrySelected: (country) {
-                              setState(() {
-                                widget.textEditingController
-                                    .setCountry(country);
-                              });
-                            },
-                          );
-                        } else {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => CountrySelectScreen(
-                                countrySelectionLabel:
-                                    widget.countrySelectionLabel,
-                                title: widget.countrySelectionText,
-                                titleStyle: widget.countrySelectionTextStyle,
-                                onCountrySelected: (country) {
-                                  setState(() {
-                                    widget.textEditingController
-                                        .setCountry(country);
-                                  });
-                                },
+                prefixIcon: IntrinsicWidth(
+                  child: Row(
+                    children: [
+                      CountrySelectButton(
+                        selectedCountry:
+                            widget.textEditingController.selectedCountry,
+                        onPressed: () {
+                          if (widget.countrySelectionType ==
+                              CountrySelectionTypeEnum.dialog) {
+                            countrySelectDialog(
+                              context,
+                              titleStyle: widget.countrySelectionTextStyle,
+                              titleText: widget.countrySelectionText,
+                              countrySelectionLabel:
+                                  widget.countrySelectionLabel,
+                              onCountrySelected: (country) {
+                                setState(() {
+                                  widget.textEditingController
+                                      .setCountry(country);
+                                });
+                              },
+                            );
+                          } else {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CountrySelectScreen(
+                                  countrySelectionLabel:
+                                      widget.countrySelectionLabel,
+                                  title: widget.countrySelectionText,
+                                  titleStyle: widget.countrySelectionTextStyle,
+                                  onCountrySelected: (country) {
+                                    setState(() {
+                                      widget.textEditingController
+                                          .setCountry(country);
+                                    });
+                                  },
+                                ),
                               ),
-                            ),
-                          );
-                        }
-                      },
-                      options: widget.countrySelectOption,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 4.0,
-                        bottom: 4.0,
-                        right: 8.0,
+                            );
+                          }
+                        },
+                        options: widget.countrySelectOption,
                       ),
-                      child: Container(
-                        width: 2,
-                        height: 40,
-                        color: Colors.grey.shade200,
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: 4.0,
+                          bottom: 4.0,
+                          right: 8.0,
+                        ),
+                        child: Container(
+                          width: 2,
+                          height: 40,
+                          color: Colors.grey.shade200,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
+                hintText: 'Informe o número',
+                counterText: '',
               ),
-              hintText: 'Informe o número',
-              counterText: '',
-            ),
-            style: TextStyle(fontSize: widget.phoneInputFontSize),
-            autovalidateMode: widget.autovalidateMode,
-            validator: (value) {
-              if (!widget.enableValidation) {
-                if ((value == null || value.isEmpty) &&
-                    widget.textEditingController.selectedCountry == null) {
+              style: TextStyle(fontSize: widget.phoneInputFontSize),
+              autovalidateMode: widget.autovalidateMode,
+              validator: (value) {
+                if (!widget.enableValidation) {
+                  if ((value == null || value.isEmpty) &&
+                      widget.textEditingController.selectedCountry == null) {
+                    return null;
+                  }
                   return null;
                 }
-                return null;
-              }
-              return validatePhone(
-                selectedCountry: widget.textEditingController.selectedCountry,
-                validationMessage: widget.validationErrorText,
-                value: value,
-              );
-            },
+                return validatePhone(
+                  selectedCountry: widget.textEditingController.selectedCountry,
+                  validationMessage: widget.validationErrorText,
+                  value: value,
+                );
+              },
+            ),
           ),
         ),
       ],

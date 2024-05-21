@@ -15,6 +15,7 @@ class IntlTextEditingController extends TextEditingController {
 
   @override
   set text(String newText) {
+    print(text);
     if (newText != text) {
       super.text = newText;
       notifyListeners();
@@ -39,7 +40,7 @@ class IntlTextEditingController extends TextEditingController {
       newValue: TextEditingValue(text: selectedCountry?.currentAreaCode ?? ''),
     );
 
-    text = maskFormatter.maskText(phoneNumber);
+    value = TextEditingValue(text: maskFormatter.maskText(phoneNumber));
     notifyListeners();
   }
 
@@ -52,7 +53,9 @@ class IntlTextEditingController extends TextEditingController {
       newValue: TextEditingValue(text: selectedCountry?.currentAreaCode ?? ''),
     );
 
-    text = maskFormatter.maskText(newCountry?.currentAreaCode ?? '');
+    value = TextEditingValue(
+      text: maskFormatter.maskText(newCountry?.currentAreaCode ?? ''),
+    );
 
     notifyListeners();
   }
