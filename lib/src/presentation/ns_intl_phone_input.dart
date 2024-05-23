@@ -87,6 +87,7 @@ class _NsIntlPhoneInputState extends State<NsIntlPhoneInput>
           flex: 6,
           child: TextFormField(
             key: const Key('ns_phone_input_field'),
+            keyboardType: TextInputType.phone,
             controller: widget.textEditingController,
             inputFormatters: [widget.textEditingController.maskFormatter],
             decoration: widget.phoneFieldDecoration ??
