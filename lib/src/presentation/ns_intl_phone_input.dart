@@ -10,6 +10,7 @@ class NsIntlPhoneInput extends StatefulWidget {
     Key? key,
     required this.onPhoneChange,
     required this.textEditingController,
+    this.hintText = 'Informe o número',
     this.countrySelectionText = 'Search Country',
     this.countrySelectionLabel = 'Search',
     this.countrySelectionTextStyle = const TextStyle(),
@@ -23,6 +24,7 @@ class NsIntlPhoneInput extends StatefulWidget {
   }) : super(key: key);
 
   final String countrySelectionLabel;
+  final String hintText;
   final String countrySelectionText;
   final TextStyle countrySelectionTextStyle;
   final bool enableValidation;
@@ -171,7 +173,7 @@ class _NsIntlPhoneInputState extends State<NsIntlPhoneInput>
                       ],
                     ),
                   ),
-                  hintText: 'Informe o número',
+                  hintText: widget.hintText,
                   counterText: '',
                 ),
             style: TextStyle(fontSize: widget.phoneInputFontSize),
